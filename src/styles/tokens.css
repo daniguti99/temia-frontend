@@ -1,0 +1,47 @@
+/* Tokens de diseño de TemIA — «Pupitre» */
+:root {
+  /* Color */
+  --color-fondo: #edf1ef;
+  --color-superficie: #ffffff;
+  --color-texto: #16202a;
+  --color-texto-suave: #4a5a66;
+  --color-linea: #c9d3ce;
+  --color-accion: #2447e0;
+  --color-accion-tenue: #e2e7fb;
+  --color-acento: #f3e04b;
+  --color-exito: #1f7a4d;
+  --color-error: #b3261e;
+  --color-aviso: #9a6b00;
+
+  /* Tipografía */
+  --fuente-titulo: 'Literata', Georgia, serif;
+  --fuente-texto: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+  --texto-xs: 0.75rem;
+  --texto-sm: 0.875rem;
+  --texto-base: 1.0625rem;
+  --texto-lg: 1.25rem;
+  --texto-xl: 1.5rem;
+  --texto-2xl: 2rem;
+
+  /* Espaciado */
+  --espacio-1: 4px;
+  --espacio-2: 8px;
+  --espacio-3: 12px;
+  --espacio-4: 16px;
+  --espacio-5: 24px;
+  --espacio-6: 32px;
+  --espacio-7: 48px;
+  --espacio-8: 64px;
+
+  /* Bordes y sombras */
+  --radio-sm: 4px;
+  --radio-md: 8px;
+  --radio-pill: 999px;
+  --sombra-sm: 0 1px 2px rgba(22, 32, 42, 0.06);
+  --sombra-md: 0 8px 24px rgba(22, 32, 42, 0.12);
+
+  /* Maqueta */
+  --ancho-lectura: 68ch;
+  --ancho-riel: 264px;
+  --ancho-marcas: 56px;
+}
