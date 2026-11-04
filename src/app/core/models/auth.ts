@@ -22,6 +22,19 @@ export interface RegisterRequest {
   confirmPassword: string;
 }
 
+/**
+ * Cuerpo de `PATCH /api/auth/me`.
+ *
+ * El email no se envía: identifica la cuenta y no se puede cambiar. Los campos de
+ * contraseña vacíos significan «no cambiar la contraseña».
+ */
+export interface ActualizarPerfilRequest {
+  username: string;
+  currentPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+}
+
 /** Respuesta de login y registro. */
 export interface AuthResponse {
   token: string;

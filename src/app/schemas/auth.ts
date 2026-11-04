@@ -29,6 +29,49 @@ export function emailsIguales(): ValidatorFn {
   };
 }
 
+/** Rechaza cadenas formadas solo por espacios. */
+export function sinSoloEspacios(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const valor = control.value;
+
+    if (typeof valor !== 'string' || valor.length === 0) {
+      return null;
+    }
+    return valor.trim().length === 0 ? { soloEspacios: true } : null;
+  };
+}
+
+/**
+ * Valida la sección opcional de cambio de contraseña del perfil.
+ *
+ * Si los tres campos están vacíos no hay cambio. En cuanto se rellena uno, se exigen
+ * la contraseña actual, la nueva y su confirmación.
+ */
+export function cambioPasswordCoherente(): ValidatorFn {
+  return (grupo: AbstractControl): ValidationErrors | null => {
+    const actual = String(grupo.get('currentPassword')?.value ?? '');
+    const nueva = String(grupo.get('newPassword')?.value ?? '');
+    const confirmacion = String(grupo.get('confirmPassword')?.value ?? '');
+
+    if (!actual && !nueva && !confirmacion) {
+      return null;
+    }
+    if (!actual) {
+      return { faltaPasswordActual: true };
+    }
+    if (!nueva) {
+      return { faltaPasswordNueva: true };
+    }
+    if (nueva.length < 8) {
+      return { nuevaPasswordCorta: true };
+    }
+    if (nueva !== confirmacion) {
+      return { contrasenasDistintas: true };
+    }
+    return null;
+  };
+}
+
 /** Valida la foto de perfil: JPG, PNG o WEBP y 2 MB como máximo. */
 export function imagenPerfilValida(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {

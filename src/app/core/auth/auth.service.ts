@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Observable, firstValueFrom, tap } from 'rxjs';
 
 import { API_URL } from '../../api/api.config';
-import { AuthResponse, LoginRequest, RegisterRequest, UserInfo } from '../models/auth';
+import { AuthResponse, ActualizarPerfilRequest, LoginRequest, RegisterRequest, UserInfo } from '../models/auth';
 
 const CLAVE_TOKEN = 'temia_token';
 const CLAVE_USUARIO = 'temia_user';
@@ -43,6 +43,19 @@ export class AuthService {
   }
 
   /**
+   * Actualiza el nombre de usuario y, si se envía, la contraseña.
+   * El backend devuelve el `UserInfo` actualizado y aquí se guarda en la sesión.
+   */
+  actualizarPerfil(peticion: ActualizarPerfilRequest): Observable<UserInfo> {
+    return this.http.patch<UserInfo>(`${this.URL_AUTH}/me`, peticion).pipe(
+      tap((usuario) => {
+        localStorage.setItem(CLAVE_USUARIO, JSON.stringify(usuario));
+        this._usuario.set(usuario);
+      }),
+    );
+  }
+
+  /**
    * Restaura la sesión al arrancar: si hay token, lo valida contra `/me`.
    * Cualquier fallo limpia la sesión.
    */
@@ -64,6 +77,12 @@ export class AuthService {
   cerrarSesion(): void {
     this.limpiarSesion();
     this.router.navigate(['/']);
+  }
+
+  /** Limpia la sesión caducada y lleva al login. */
+  sesionCaducada(): void {
+    this.limpiarSesion();
+    this.router.navigate(['/auth/login']);
   }
 
   private guardarSesion(respuesta: AuthResponse): void {
