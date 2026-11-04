@@ -10,11 +10,7 @@ import { AuthService } from '../../core/auth/auth.service';
   styleUrl: './entrada.css',
 })
 export class Entrada {
-  private auth = inject(AuthService);
+  private readonly auth = inject(AuthService);
 
   protected readonly usuario = this.auth.usuario;
-
-  protected cerrarSesion(): void {
-    this.auth.cerrarSesion();
-  }
 }

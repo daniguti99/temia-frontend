@@ -1,1 +1,9 @@
-<router-outlet />
+@if (usuario(); as sesion) {
+  <app-nav-bar [usuario]="sesion" (cerrarSesion)="cerrarSesion()" />
+}
+
+<main class="app__contenido">
+  <router-outlet />
+</main>
+
+<app-footer />

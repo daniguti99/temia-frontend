@@ -1,0 +1,48 @@
+<header class="nav">
+  <div class="nav__barra">
+    <a class="nav__marca" routerLink="/" aria-label="TemIA, ir al inicio">
+      <span class="nav__marca-texto">TemIA</span>
+    </a>
+
+    <button
+      class="nav__menu"
+      type="button"
+      (click)="alternarMenu()"
+      [attr.aria-expanded]="menuAbierto()"
+      aria-controls="menu-principal"
+      [attr.aria-label]="menuAbierto() ? 'Cerrar menú de navegación' : 'Abrir menú de navegación'"
+    >
+      {{ menuAbierto() ? 'Cerrar' : 'Menú' }}
+    </button>
+
+    <nav
+      id="menu-principal"
+      class="nav__enlaces"
+      [class.nav__enlaces--abierto]="menuAbierto()"
+      aria-label="Navegación principal"
+    >
+      @for (enlace of enlaces; track enlace.ruta) {
+        <a
+          class="nav__enlace"
+          [routerLink]="enlace.ruta"
+          routerLinkActive="nav__enlace--activo"
+          [routerLinkActiveOptions]="{ exact: enlace.ruta === '/' }"
+          ariaCurrentWhenActive="page"
+          (click)="cerrarMenu()"
+        >
+          {{ enlace.etiqueta }}
+        </a>
+      }
+    </nav>
+
+    <div class="nav__sesion">
+      <a class="nav__perfil" routerLink="/perfil" aria-label="Ver mi perfil">
+        <app-avatar [nombre]="usuario().username" [foto]="usuario().photo" />
+      </a>
+
+      <button class="boton boton--secundario nav__salir" type="button" (click)="salir()">
+        Cerrar sesión
+      </button>
+    </div>
+  </div>
+</header>

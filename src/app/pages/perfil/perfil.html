@@ -1,0 +1,39 @@
+<main class="perfil">
+  @if (usuario(); as sesion) {
+    <section class="hoja perfil__hoja">
+      <p class="perfil__seccion">Perfil</p>
+
+      <div class="perfil__cabecera">
+        <app-avatar [nombre]="sesion.username" [foto]="sesion.photo" tamano="lg" />
+
+        <div>
+          <h1 class="perfil__nombre">{{ sesion.username }}</h1>
+          <p class="perfil__rol">{{ etiquetaRol() }}</p>
+        </div>
+      </div>
+
+      <dl class="perfil__datos">
+        <div class="perfil__dato">
+          <dt class="perfil__etiqueta">Nombre de usuario</dt>
+          <dd class="perfil__valor">{{ sesion.username }}</dd>
+        </div>
+
+        <div class="perfil__dato">
+          <dt class="perfil__etiqueta">Email</dt>
+          <dd class="perfil__valor">{{ sesion.email }}</dd>
+        </div>
+
+        <div class="perfil__dato">
+          <dt class="perfil__etiqueta">Rol</dt>
+          <dd class="perfil__valor">{{ etiquetaRol() }}</dd>
+        </div>
+      </dl>
+
+      <p class="perfil__aviso">
+        La edición del perfil y el cambio de foto llegarán en una próxima versión.
+      </p>
+
+      <a class="boton boton--secundario perfil__volver" routerLink="/">Volver a Inicio</a>
+    </section>
+  }
+</main>

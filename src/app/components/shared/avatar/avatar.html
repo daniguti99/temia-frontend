@@ -1,0 +1,12 @@
+<span class="avatar" [class.avatar--lg]="tamano() === 'lg'">
+  @if (mostrarFoto()) {
+    <img
+      class="avatar__imagen"
+      [src]="foto()"
+      [alt]="'Foto de perfil de ' + nombre()"
+      (error)="marcarFotoFallida()"
+    />
+  } @else {
+    <span class="avatar__inicial" aria-hidden="true">{{ inicial() }}</span>
+  }
+</span>

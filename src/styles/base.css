@@ -174,14 +174,23 @@ p {
 app-root,
 app-entrada,
 app-login,
-app-registro {
+app-registro,
+app-perfil,
+app-legal,
+app-pagina-pendiente {
   display: block;
+}
+
+/* El contenido central crece para dejar el pie de página al fondo.
+   `router-outlet` no participa: el componente enrutado es su hermano. */
+.app__contenido > :not(router-outlet) {
+  flex: 1;
 }
 
 .acceso {
   display: grid;
   place-items: center;
-  min-height: 100dvh;
+  min-height: 100%;
   padding: var(--espacio-6);
 }
 

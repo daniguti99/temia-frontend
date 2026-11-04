@@ -1,0 +1,16 @@
+<main class="pendiente">
+  <section class="hoja pendiente__hoja">
+    <p class="pendiente__seccion">{{ titulo() }}</p>
+    <h1 class="pendiente__titulo">En construcción</h1>
+
+    @if (descripcion()) {
+      <p class="pendiente__texto">{{ descripcion() }}</p>
+    }
+
+    <p class="pendiente__texto">
+      Esta sección llegará en una próxima versión. Mientras tanto, puedes volver al inicio.
+    </p>
+
+    <a class="boton pendiente__volver" routerLink="/">Volver a Inicio</a>
+  </section>
+</main>
