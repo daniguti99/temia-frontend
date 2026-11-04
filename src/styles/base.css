@@ -46,3 +46,217 @@ p {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* --- Piezas compartidas (botón, campo y hoja) --- */
+
+.hoja {
+  background: var(--color-superficie);
+  border: 1px solid var(--color-linea);
+  border-radius: var(--radio-md);
+  padding: var(--espacio-6);
+  box-shadow: var(--sombra-sm);
+}
+
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espacio-2);
+  background: var(--color-accion);
+  color: var(--color-superficie);
+  border: 1px solid transparent;
+  border-radius: var(--radio-pill);
+  padding: var(--espacio-2) var(--espacio-5);
+  font-family: var(--fuente-texto);
+  font-size: var(--texto-sm);
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.boton:hover {
+  filter: brightness(1.08);
+}
+
+.boton:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  filter: none;
+}
+
+.boton--secundario {
+  background: transparent;
+  color: var(--color-texto);
+  border-color: var(--color-linea);
+}
+
+.boton--secundario:hover {
+  background: var(--color-accion-tenue);
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-1);
+}
+
+.campo__label {
+  font-family: var(--fuente-texto);
+  font-size: var(--texto-sm);
+  color: var(--color-texto-suave);
+}
+
+.campo__input {
+  width: 100%;
+  background: var(--color-superficie);
+  color: var(--color-texto);
+  border: 1px solid var(--color-linea);
+  border-radius: var(--radio-sm);
+  padding: var(--espacio-2) var(--espacio-3);
+  font-family: var(--fuente-texto);
+  font-size: var(--texto-base);
+}
+
+.campo__input:focus-visible {
+  border-color: var(--color-accion);
+}
+
+.campo__control {
+  position: relative;
+}
+
+.campo__input--con-ojo {
+  padding-right: 5.5em;
+}
+
+.campo__ojo {
+  position: absolute;
+  top: 50%;
+  right: var(--espacio-1);
+  transform: translateY(-50%);
+  padding: var(--espacio-1) var(--espacio-2);
+  background: transparent;
+  color: var(--color-texto-suave);
+  border: 1px solid transparent;
+  border-radius: var(--radio-sm);
+  font-family: var(--fuente-texto);
+  font-size: var(--texto-xs);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.campo__ojo:hover {
+  color: var(--color-texto);
+  background: var(--color-accion-tenue);
+}
+
+.campo__ojo:focus-visible {
+  outline: 2px solid var(--color-accion);
+  outline-offset: 1px;
+}
+
+.campo--invalido .campo__input {
+  border-color: var(--color-error);
+}
+
+.campo__error {
+  color: var(--color-error);
+  font-size: var(--texto-xs);
+}
+
+.campo__ayuda {
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+}
+
+/* --- Pantallas de acceso (login y registro) --- */
+
+app-root,
+app-entrada,
+app-login,
+app-registro {
+  display: block;
+}
+
+.acceso {
+  display: grid;
+  place-items: center;
+  min-height: 100dvh;
+  padding: var(--espacio-6);
+}
+
+.acceso__hoja {
+  width: min(100%, 48rem);
+}
+
+.acceso__cabecera {
+  margin-bottom: var(--espacio-6);
+}
+
+.acceso__marca {
+  margin-bottom: var(--espacio-3);
+  font-family: var(--fuente-titulo);
+  font-size: var(--texto-lg);
+  font-weight: 600;
+}
+
+.acceso__marca::after {
+  content: '';
+  display: block;
+  width: var(--espacio-7);
+  height: 3px;
+  margin-top: var(--espacio-2);
+  background: var(--color-acento);
+}
+
+.acceso__titulo {
+  font-size: var(--texto-2xl);
+}
+
+.acceso__entrada {
+  margin-top: var(--espacio-2);
+  color: var(--color-texto-suave);
+}
+
+.acceso__formulario {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+}
+
+.acceso__enviar {
+  margin-top: var(--espacio-2);
+}
+
+.acceso__pie {
+  margin-top: var(--espacio-6);
+  padding-top: var(--espacio-4);
+  border-top: 1px solid var(--color-linea);
+  color: var(--color-texto-suave);
+  font-size: var(--texto-sm);
+}
+
+.acceso__pie a {
+  color: var(--color-accion);
+}
+
+.acceso__volver {
+  display: inline-block;
+  margin-top: var(--espacio-3);
+  font-size: var(--texto-xs);
+}
+
+@media (max-width: 640px) {
+  .acceso {
+    padding: var(--espacio-4);
+    place-items: start center;
+  }
+
+  .acceso__hoja {
+    padding: var(--espacio-5);
+  }
+
+  .acceso__titulo {
+    font-size: var(--texto-xl);
+  }
+}

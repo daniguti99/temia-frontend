@@ -1,0 +1,80 @@
+/* Tema de SweetAlert2 con los tokens de «Pupitre».
+   Se carga después del CSS de la librería (ver angular.json). */
+
+.swal2-container.swal2-backdrop-show {
+  background: color-mix(in srgb, var(--color-texto) 35%, transparent);
+}
+
+.swal2-popup {
+  background: var(--color-superficie);
+  color: var(--color-texto);
+  border: 1px solid var(--color-linea);
+  border-radius: var(--radio-md);
+  box-shadow: var(--sombra-md);
+  font-family: var(--fuente-texto);
+  font-size: var(--texto-base);
+  padding: var(--espacio-5);
+}
+
+.swal2-title {
+  color: var(--color-texto);
+  font-family: var(--fuente-titulo);
+  font-size: var(--texto-xl);
+  font-weight: 600;
+  line-height: 1.25;
+  padding: var(--espacio-3) var(--espacio-4) 0;
+}
+
+.swal2-html-container {
+  color: var(--color-texto-suave);
+  font-family: var(--fuente-texto);
+  font-size: var(--texto-base);
+  line-height: 1.5;
+  margin: var(--espacio-3) 0 0;
+}
+
+.swal2-actions {
+  gap: var(--espacio-2);
+  margin-top: var(--espacio-5);
+}
+
+.swal2-styled {
+  border: 1px solid transparent;
+  border-radius: var(--radio-pill);
+  padding: var(--espacio-2) var(--espacio-5);
+  font-family: var(--fuente-texto);
+  font-size: var(--texto-sm);
+  font-weight: 600;
+  box-shadow: none;
+}
+
+.swal2-styled:focus-visible {
+  outline: 2px solid var(--color-accion);
+  outline-offset: 2px;
+  box-shadow: none;
+}
+
+.swal2-styled.swal2-confirm {
+  background: var(--color-accion);
+  color: var(--color-superficie);
+}
+
+.swal2-styled.swal2-confirm:hover {
+  background: var(--color-accion);
+  filter: brightness(1.08);
+}
+
+.swal2-styled.swal2-cancel {
+  background: transparent;
+  color: var(--color-texto);
+  border-color: var(--color-linea);
+}
+
+.swal2-styled.swal2-cancel:hover {
+  background: var(--color-accion-tenue);
+  color: var(--color-texto);
+}
+
+.swal2-timer-progress-bar {
+  background: var(--color-accion);
+}

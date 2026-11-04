@@ -1,0 +1,32 @@
+<main class="entrada">
+  <div class="entrada__cuerpo">
+    <div class="entrada__margen" aria-hidden="true"></div>
+
+    <section class="entrada__texto">
+      <p class="entrada__nombre"><span class="entrada__marca">TemIA</span></p>
+
+      <h1 class="entrada__titulo">Tus apuntes, convertidos en resumen y en examen.</h1>
+
+      @if (usuario(); as sesion) {
+        <p class="entrada__entrada">
+          Hola, <strong>{{ sesion.username }}</strong>. Tienes la sesión abierta con
+          <span class="entrada__email">{{ sesion.email }}</span>.
+        </p>
+
+        <div class="entrada__acciones">
+          <button class="boton" type="button" (click)="cerrarSesion()">Cerrar sesión</button>
+        </div>
+      } @else {
+        <p class="entrada__entrada">
+          Sube un temario, obtén el resumen de lo importante y practica con preguntas tipo
+          test. Entra con tu cuenta o crea una nueva para empezar.
+        </p>
+
+        <div class="entrada__acciones">
+          <a class="boton" routerLink="/auth/login">Iniciar sesión</a>
+          <a class="boton boton--secundario" routerLink="/auth/register">Registrarme</a>
+        </div>
+      }
+    </section>
+  </div>
+</main>

@@ -1,0 +1,59 @@
+<main class="acceso">
+  <section class="hoja acceso__hoja">
+    <header class="acceso__cabecera">
+      <p class="acceso__marca">TemIA</p>
+      <h1 class="acceso__titulo">Iniciar sesión</h1>
+      <p class="acceso__entrada">Entra con tu email o tu nombre de usuario.</p>
+    </header>
+
+    <form class="acceso__formulario" [formGroup]="formulario" (ngSubmit)="entrar()" novalidate>
+      <div class="campo" [class.campo--invalido]="esCampoInvalido('login')">
+        <label class="campo__label" for="login">Email o nombre de usuario</label>
+        <input
+          id="login"
+          class="campo__input"
+          type="text"
+          formControlName="login"
+          autocomplete="username"
+        />
+        @if (esCampoInvalido('login')) {
+          <p class="campo__error">Escribe tu email o tu nombre de usuario.</p>
+        }
+      </div>
+
+      <div class="campo" [class.campo--invalido]="esCampoInvalido('password')">
+        <label class="campo__label" for="password">Contraseña</label>
+        <div class="campo__control">
+          <input
+            id="password"
+            class="campo__input campo__input--con-ojo"
+            [type]="verPassword() ? 'text' : 'password'"
+            formControlName="password"
+            autocomplete="current-password"
+          />
+          <button
+            class="campo__ojo"
+            type="button"
+            (click)="alternarPassword()"
+            [attr.aria-pressed]="verPassword()"
+            [attr.aria-label]="verPassword() ? 'Ocultar contraseña' : 'Mostrar contraseña'"
+          >
+            {{ verPassword() ? 'Ocultar' : 'Ver' }}
+          </button>
+        </div>
+        @if (esCampoInvalido('password')) {
+          <p class="campo__error">Escribe tu contraseña.</p>
+        }
+      </div>
+
+      <button class="boton acceso__enviar" type="submit" [disabled]="enviando()">
+        {{ enviando() ? 'Entrando…' : 'Entrar' }}
+      </button>
+    </form>
+
+    <footer class="acceso__pie">
+      <p>¿Todavía no tienes cuenta? <a routerLink="/auth/register">Crear una</a></p>
+      <a class="acceso__volver" routerLink="/">Volver a la portada</a>
+    </footer>
+  </section>
+</main>
