@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, firstValueFrom, tap } from 'rxjs';
+import { Observable, firstValueFrom, map, tap } from 'rxjs';
 
 import { API_URL } from '../../api/api.config';
-import { AuthResponse, ActualizarPerfilRequest, LoginRequest, RegisterRequest, UserInfo } from '../models/auth';
+import { ApiResponse, AuthResponse, ActualizarPerfilRequest, LoginRequest, RegisterRequest, UserInfo } from '../models/auth';
 
 const CLAVE_TOKEN = 'temia_token';
 const CLAVE_USUARIO = 'temia_user';
@@ -27,8 +27,11 @@ export class AuthService {
   /** Inicia sesión y guarda token y usuario. */
   login(peticion: LoginRequest): Observable<AuthResponse> {
     return this.http
-      .post<AuthResponse>(`${this.URL_AUTH}/login`, peticion)
-      .pipe(tap((respuesta) => this.guardarSesion(respuesta)));
+      .post<ApiResponse<AuthResponse>>(`${this.URL_AUTH}/login`, peticion)
+      .pipe(
+        map((respuesta) => respuesta.data),
+        tap((respuesta) => this.guardarSesion(respuesta)),
+      );
   }
 
   /** Crea la cuenta y envía la foto opcional como parte `photo`. */
@@ -39,7 +42,9 @@ export class AuthService {
       cuerpo.append('photo', foto);
     }
 
-    return this.http.post<AuthResponse>(`${this.URL_AUTH}/register`, cuerpo);
+    return this.http
+      .post<ApiResponse<AuthResponse>>(`${this.URL_AUTH}/register`, cuerpo)
+      .pipe(map((respuesta) => respuesta.data));
   }
 
   /**
@@ -47,7 +52,8 @@ export class AuthService {
    * El backend devuelve el `UserInfo` actualizado y aquí se guarda en la sesión.
    */
   actualizarPerfil(peticion: ActualizarPerfilRequest): Observable<UserInfo> {
-    return this.http.patch<UserInfo>(`${this.URL_AUTH}/me`, peticion).pipe(
+    return this.http.patch<ApiResponse<UserInfo>>(`${this.URL_AUTH}/me`, peticion).pipe(
+      map((respuesta) => respuesta.data),
       tap((usuario) => {
         localStorage.setItem(CLAVE_USUARIO, JSON.stringify(usuario));
         this._usuario.set(usuario);
@@ -65,7 +71,10 @@ export class AuthService {
     }
 
     try {
-      const usuario = await firstValueFrom(this.http.get<UserInfo>(`${this.URL_AUTH}/me`));
+      const respuesta = await firstValueFrom(
+        this.http.get<ApiResponse<UserInfo>>(`${this.URL_AUTH}/me`),
+      );
+      const usuario = respuesta.data;
       this._usuario.set(usuario);
       localStorage.setItem(CLAVE_USUARIO, JSON.stringify(usuario));
     } catch {

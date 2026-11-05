@@ -42,8 +42,16 @@ export interface AuthResponse {
   user: UserInfo;
 }
 
+/** Envelope común de todas las respuestas correctas de la API (`ApiResponse<T>`). */
+export interface ApiResponse<T> {
+  success: boolean;
+  message: string;
+  data: T;
+}
+
 /** Cuerpo de error de la API (`ApiError` del backend). */
 export interface ApiError {
+  success: false;
   timestamp: string;
   status: number;
   error: string;
