@@ -10,6 +10,7 @@ import {
   contrasenasIguales,
   emailsIguales,
   imagenPerfilValida,
+  mensajeErrorImagen,
 } from '../../../schemas/auth';
 
 type CampoRegistro =
@@ -80,13 +81,7 @@ export class Registro {
     if (errores['email']) {
       return 'El formato del correo no es válido';
     }
-    if (errores['tipoNoPermitido']) {
-      return 'La foto debe ser JPG, PNG o WEBP';
-    }
-    if (errores['demasiadoGrande']) {
-      return 'La foto no puede superar 2 MB';
-    }
-    return null;
+    return mensajeErrorImagen(errores);
   }
 
   protected inicial(): string {

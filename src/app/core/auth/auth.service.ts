@@ -54,11 +54,31 @@ export class AuthService {
   actualizarPerfil(peticion: ActualizarPerfilRequest): Observable<UserInfo> {
     return this.http.patch<ApiResponse<UserInfo>>(`${this.URL_AUTH}/me`, peticion).pipe(
       map((respuesta) => respuesta.data),
-      tap((usuario) => {
-        localStorage.setItem(CLAVE_USUARIO, JSON.stringify(usuario));
-        this._usuario.set(usuario);
-      }),
+      tap((usuario) => this.guardarUsuario(usuario)),
     );
+  }
+
+  /**
+   * Sustituye la foto de perfil.
+   *
+   * Envía el archivo como parte `photo` de un `multipart/form-data` y guarda el
+   * `UserInfo` que devuelve el backend para que la barra y el perfil se actualicen.
+   */
+  actualizarFoto(foto: File): Observable<UserInfo> {
+    const cuerpo = new FormData();
+    cuerpo.append('photo', foto);
+
+    return this.http.post<ApiResponse<UserInfo>>(`${this.URL_AUTH}/me/photo`, cuerpo).pipe(
+      map((respuesta) => respuesta.data),
+      tap((usuario) => this.guardarUsuario(usuario)),
+    );
+  }
+
+  /** Elimina la foto de perfil y guarda el `UserInfo` actualizado (con `photo: null`). */
+  eliminarFoto(): Observable<UserInfo> {
+    return this.http
+      .delete<ApiResponse<UserInfo>>(`${this.URL_AUTH}/me/photo`)
+      .pipe(map((respuesta) => respuesta.data), tap((usuario) => this.guardarUsuario(usuario)));
   }
 
   /**
@@ -74,9 +94,7 @@ export class AuthService {
       const respuesta = await firstValueFrom(
         this.http.get<ApiResponse<UserInfo>>(`${this.URL_AUTH}/me`),
       );
-      const usuario = respuesta.data;
-      this._usuario.set(usuario);
-      localStorage.setItem(CLAVE_USUARIO, JSON.stringify(usuario));
+      this.guardarUsuario(respuesta.data);
     } catch {
       this.limpiarSesion();
     }
@@ -96,8 +114,13 @@ export class AuthService {
 
   private guardarSesion(respuesta: AuthResponse): void {
     localStorage.setItem(CLAVE_TOKEN, respuesta.token);
-    localStorage.setItem(CLAVE_USUARIO, JSON.stringify(respuesta.user));
-    this._usuario.set(respuesta.user);
+    this.guardarUsuario(respuesta.user);
+  }
+
+  /** Mantiene sincronizados el signal de sesión y `temia_user`. */
+  private guardarUsuario(usuario: UserInfo): void {
+    localStorage.setItem(CLAVE_USUARIO, JSON.stringify(usuario));
+    this._usuario.set(usuario);
   }
 
   private limpiarSesion(): void {

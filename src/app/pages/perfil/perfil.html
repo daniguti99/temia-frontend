@@ -4,11 +4,44 @@
       <p class="perfil__seccion">Perfil</p>
 
       <div class="perfil__cabecera">
-        <app-avatar [nombre]="sesion.username" [foto]="sesion.photo" tamano="lg" />
+        <div class="perfil__avatar">
+          <app-avatar [nombre]="sesion.username" [foto]="fotoVisible()" tamano="lg" />
+          @if (subiendoFoto()) {
+            <span class="perfil__avatar-carga" role="status">Subiendo…</span>
+          }
+        </div>
 
-        <div>
+        <div class="perfil__identidad">
           <h1 class="perfil__nombre">{{ sesion.username }}</h1>
           <p class="perfil__rol">{{ etiquetaRol() }}</p>
+
+          <button
+            class="boton boton--secundario perfil__cambiar"
+            type="button"
+            (click)="abrirSelectorFoto()"
+            [disabled]="subiendoFoto()"
+          >
+            {{ subiendoFoto() ? 'Subiendo foto…' : 'Cambiar foto' }}
+          </button>
+          <input
+            #selectorFoto
+            class="perfil__selector"
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            aria-label="Elegir nueva foto de perfil"
+            (change)="alSeleccionarFoto($event)"
+          />
+
+          @if (sesion.photo) {
+            <button
+              class="boton boton--secundario"
+              type="button"
+              (click)="quitarFoto()"
+              [disabled]="borrandoFoto()"
+            >
+              {{ borrandoFoto() ? 'Quitando foto…' : 'Quitar foto' }}
+            </button>
+          }
         </div>
       </div>
 

@@ -31,6 +31,47 @@
   border-bottom: 1px solid var(--color-linea);
 }
 
+.perfil__avatar {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.perfil__avatar-carga {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radio-pill);
+  background: color-mix(in srgb, var(--color-superficie) 72%, transparent);
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+  font-weight: 600;
+}
+
+.perfil__identidad {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--espacio-2);
+  min-width: 0;
+}
+
+.perfil__cambiar {
+  margin-top: var(--espacio-2);
+}
+
+.perfil__selector {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .perfil__nombre {
   font-size: var(--texto-2xl);
   overflow-wrap: anywhere;

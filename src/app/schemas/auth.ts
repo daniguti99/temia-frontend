@@ -1,7 +1,49 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
-const TIPOS_IMAGEN = ['image/jpeg', 'image/png', 'image/webp'];
-const TAMANO_MAXIMO = 2 * 1024 * 1024;
+/** Tipos de imagen admitidos para la foto de perfil. */
+export const TIPOS_IMAGEN_PERFIL = ['image/jpeg', 'image/png', 'image/webp'];
+
+/** Tamaño máximo de la foto de perfil: 2 MB. */
+export const TAMANO_MAXIMO_FOTO = 2 * 1024 * 1024;
+
+/**
+ * Comprueba un archivo de foto de perfil.
+ *
+ * Es la única fuente de verdad para el tipo y el tamaño: la usan el validador del
+ * formulario de registro y la selección de foto de `/perfil`.
+ */
+export function validarImagenPerfil(archivo: File | null): ValidationErrors | null {
+  if (!archivo) {
+    return null;
+  }
+  if (!TIPOS_IMAGEN_PERFIL.includes(archivo.type)) {
+    return { tipoNoPermitido: true };
+  }
+  if (archivo.size > TAMANO_MAXIMO_FOTO) {
+    return { demasiadoGrande: true };
+  }
+  return null;
+}
+
+/** Traduce los errores de imagen a un mensaje para el usuario. */
+export function mensajeErrorImagen(errores: ValidationErrors | null): string | null {
+  if (!errores) {
+    return null;
+  }
+  if (errores['tipoNoPermitido']) {
+    return 'La foto debe ser JPG, PNG o WEBP';
+  }
+  if (errores['demasiadoGrande']) {
+    return 'La foto no puede superar 2 MB';
+  }
+  return null;
+}
+
+/** Valida la foto de perfil: JPG, PNG o WEBP y 2 MB como máximo. */
+export function imagenPerfilValida(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null =>
+    validarImagenPerfil(control.value as File | null);
+}
 
 /** Marca el formulario cuando la contraseña y su confirmación no coinciden. */
 export function contrasenasIguales(): ValidatorFn {
@@ -67,24 +109,6 @@ export function cambioPasswordCoherente(): ValidatorFn {
     }
     if (nueva !== confirmacion) {
       return { contrasenasDistintas: true };
-    }
-    return null;
-  };
-}
-
-/** Valida la foto de perfil: JPG, PNG o WEBP y 2 MB como máximo. */
-export function imagenPerfilValida(): ValidatorFn {
-  return (control: AbstractControl): ValidationErrors | null => {
-    const archivo = control.value as File | null;
-
-    if (!archivo) {
-      return null;
-    }
-    if (!TIPOS_IMAGEN.includes(archivo.type)) {
-      return { tipoNoPermitido: true };
-    }
-    if (archivo.size > TAMANO_MAXIMO) {
-      return { demasiadoGrande: true };
     }
     return null;
   };
