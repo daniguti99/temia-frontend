@@ -1,0 +1,47 @@
+<main class="nuevo">
+  <section class="hoja nuevo__hoja">
+    <header class="nuevo__cabecera">
+      <p class="nuevo__seccion">Apuntes</p>
+      <h1 class="nuevo__titulo">Nuevo apunte</h1>
+      <p class="nuevo__entrada">
+        Ponle un título reconocible y escribe el contenido que quieras guardar.
+      </p>
+    </header>
+
+    <form class="nuevo__formulario" [formGroup]="formulario" (ngSubmit)="guardar()" novalidate>
+      <div class="campo" [class.campo--invalido]="esInvalido('titulo')">
+        <label class="campo__label" for="apunte-titulo">Título</label>
+        <input
+          id="apunte-titulo"
+          class="campo__input"
+          type="text"
+          formControlName="titulo"
+          autocomplete="off"
+        />
+        @if (esInvalido('titulo')) {
+          <p class="campo__error">{{ mensajeError('titulo') }}</p>
+        }
+      </div>
+
+      <div class="campo" [class.campo--invalido]="esInvalido('texto')">
+        <label class="campo__label" for="apunte-texto">Texto</label>
+        <textarea
+          id="apunte-texto"
+          class="campo__input nuevo__texto"
+          rows="14"
+          formControlName="texto"
+        ></textarea>
+        @if (esInvalido('texto')) {
+          <p class="campo__error">{{ mensajeError('texto') }}</p>
+        }
+      </div>
+
+      <div class="nuevo__acciones">
+        <button class="boton" type="submit" [disabled]="guardando()">
+          {{ guardando() ? 'Creando…' : 'Crear apunte' }}
+        </button>
+        <a class="boton boton--secundario" routerLink="/apuntes">Cancelar</a>
+      </div>
+    </form>
+  </section>
+</main>

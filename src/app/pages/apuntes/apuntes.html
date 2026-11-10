@@ -1,0 +1,38 @@
+<main class="apuntes">
+  <section class="hoja apuntes__hoja">
+    <header class="apuntes__cabecera">
+      <div>
+        <p class="apuntes__seccion">Apuntes</p>
+        <h1 class="apuntes__titulo">Tu material de estudio</h1>
+        <p class="apuntes__entrada">
+          Guarda aquí tus temarios para tenerlos siempre a mano.
+        </p>
+      </div>
+
+      <a class="boton" routerLink="/apuntes/nuevo">Nuevo apunte</a>
+    </header>
+
+    @if (cargando()) {
+      <p class="apuntes__estado" role="status">Cargando apuntes…</p>
+    } @else if (apuntes().length === 0) {
+      <div class="apuntes__vacio">
+        <p>Todavía no tienes apuntes.</p>
+        <p class="apuntes__ayuda">Crea el primero para empezar a organizar tu estudio.</p>
+        <a class="boton" routerLink="/apuntes/nuevo">Crear mi primer apunte</a>
+      </div>
+    } @else {
+      <ul class="apuntes__lista">
+        @for (apunte of apuntes(); track apunte.id) {
+          <li class="apuntes__elemento">
+            <a class="apuntes__enlace" [routerLink]="['/apuntes', apunte.id]">
+              <span class="apuntes__nombre">{{ apunte.titulo }}</span>
+              <span class="apuntes__fecha">
+                Actualizado el {{ fecha(apunte.actualizadoEn) }}
+              </span>
+            </a>
+          </li>
+        }
+      </ul>
+    }
+  </section>
+</main>

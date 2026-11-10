@@ -17,14 +17,7 @@ export const routes: Routes = [
   {
     path: 'apuntes',
     canActivate: [sesionGuard],
-    loadComponent: () =>
-      import('./components/shared/pagina-pendiente/pagina-pendiente').then(
-        (m) => m.PaginaPendiente,
-      ),
-    data: {
-      titulo: 'Apuntes',
-      descripcion: 'Aquí subirás tus temarios y consultarás el material que hayas guardado.',
-    },
+    loadChildren: () => import('./pages/apuntes/apuntes-routes').then((m) => m.APUNTES_ROUTES),
   },
   {
     path: 'resumenes',

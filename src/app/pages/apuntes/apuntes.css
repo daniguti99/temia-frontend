@@ -1,0 +1,117 @@
+:host {
+  display: block;
+}
+
+.apuntes {
+  display: grid;
+  place-items: center;
+  min-height: 100%;
+  padding: var(--espacio-6);
+}
+
+.apuntes__hoja {
+  width: min(100%, 48rem);
+}
+
+.apuntes__cabecera {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--espacio-4);
+  padding-bottom: var(--espacio-5);
+  border-bottom: 1px solid var(--color-linea);
+}
+
+.apuntes__seccion {
+  margin-bottom: var(--espacio-3);
+  color: var(--color-accion);
+  font-family: var(--fuente-texto);
+  font-size: var(--texto-sm);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.apuntes__titulo {
+  font-size: var(--texto-2xl);
+}
+
+.apuntes__entrada {
+  margin-top: var(--espacio-2);
+  color: var(--color-texto-suave);
+}
+
+.apuntes__estado {
+  margin-top: var(--espacio-5);
+  color: var(--color-texto-suave);
+}
+
+.apuntes__vacio {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--espacio-3);
+  margin-top: var(--espacio-5);
+}
+
+.apuntes__ayuda {
+  color: var(--color-texto-suave);
+  font-size: var(--texto-sm);
+}
+
+.apuntes__lista {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-2);
+  margin: var(--espacio-5) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.apuntes__enlace {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--espacio-2) var(--espacio-4);
+  padding: var(--espacio-3) var(--espacio-4);
+  color: inherit;
+  text-decoration: none;
+  border: 1px solid var(--color-linea);
+  border-radius: var(--radio-sm);
+  background: var(--color-superficie);
+}
+
+.apuntes__enlace:hover {
+  border-color: var(--color-accion);
+  background: var(--color-accion-tenue);
+}
+
+.apuntes__nombre {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.apuntes__fecha {
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+}
+
+@media (max-width: 640px) {
+  .apuntes {
+    padding: var(--espacio-4);
+    place-items: start center;
+  }
+
+  .apuntes__hoja {
+    padding: var(--espacio-5);
+  }
+
+  .apuntes__cabecera {
+    flex-direction: column;
+  }
+
+  .apuntes__titulo {
+    font-size: var(--texto-xl);
+  }
+}

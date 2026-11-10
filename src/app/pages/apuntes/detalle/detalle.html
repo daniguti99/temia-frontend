@@ -1,0 +1,82 @@
+<main class="detalle">
+  <section class="hoja detalle__hoja">
+    @if (cargando()) {
+      <p class="detalle__estado" role="status">Cargando apunte…</p>
+    } @else if (apunte(); as actual) {
+      <header class="detalle__cabecera">
+        <a class="detalle__volver" routerLink="/apuntes">← Volver a apuntes</a>
+        <p class="detalle__seccion">Apunte</p>
+
+        @if (!editando()) {
+          <h1 class="detalle__titulo">{{ actual.titulo }}</h1>
+          <p class="detalle__fecha">
+            Creado el {{ fecha(actual.creadoEn) }}
+            @if (actual.actualizadoEn) {
+              · Actualizado el {{ fecha(actual.actualizadoEn) }}
+            }
+          </p>
+        }
+      </header>
+
+      @if (editando()) {
+        <form class="detalle__formulario" [formGroup]="formulario" (ngSubmit)="guardar()" novalidate>
+          <div class="campo" [class.campo--invalido]="esInvalido('titulo')">
+            <label class="campo__label" for="detalle-titulo">Título</label>
+            <input
+              id="detalle-titulo"
+              class="campo__input"
+              type="text"
+              formControlName="titulo"
+              autocomplete="off"
+            />
+            @if (esInvalido('titulo')) {
+              <p class="campo__error">{{ mensajeError('titulo') }}</p>
+            }
+          </div>
+
+          <div class="campo" [class.campo--invalido]="esInvalido('texto')">
+            <label class="campo__label" for="detalle-texto">Texto</label>
+            <textarea
+              id="detalle-texto"
+              class="campo__input detalle__texto-editor"
+              rows="16"
+              formControlName="texto"
+            ></textarea>
+            @if (esInvalido('texto')) {
+              <p class="campo__error">{{ mensajeError('texto') }}</p>
+            }
+          </div>
+
+          <div class="detalle__acciones">
+            <button class="boton" type="submit" [disabled]="guardando()">
+              {{ guardando() ? 'Guardando…' : 'Guardar cambios' }}
+            </button>
+            <button
+              class="boton boton--secundario"
+              type="button"
+              (click)="cancelar()"
+              [disabled]="guardando()"
+            >
+              Cancelar
+            </button>
+          </div>
+        </form>
+      } @else {
+        <div class="detalle__texto">{{ actual.texto }}</div>
+
+        <div class="detalle__acciones">
+          <button class="boton" type="button" (click)="editar()">Editar</button>
+          <button
+            class="boton boton--peligro"
+            type="button"
+            (click)="eliminar()"
+            [disabled]="eliminando()"
+          >
+            {{ eliminando() ? 'Eliminando…' : 'Eliminar' }}
+          </button>
+          <a class="boton boton--secundario" routerLink="/apuntes">Volver al listado</a>
+        </div>
+      }
+    }
+  </section>
+</main>
